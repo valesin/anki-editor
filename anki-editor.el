@@ -709,7 +709,9 @@ A leading logical operator like `+' or `&' is required in MATCH."
 DECK is only inserted if not already inherited. For PREFIX and more
 see `anki-editor-insert-note' which wraps this function."
   (org-insert-heading-respect-content)
-  (insert heading ":anki:")
+  (let ((pos (point)))  ; record the end of the heading text
+    (insert " :anki:")
+    (goto-char pos))    ; move the cursor to just before the tag
   (org-set-property anki-editor-prop-note-type type)
   (unless (save-excursion
             (org-up-heading-safe)
